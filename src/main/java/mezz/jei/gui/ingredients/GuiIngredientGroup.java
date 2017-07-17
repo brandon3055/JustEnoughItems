@@ -1,15 +1,5 @@
 package mezz.jei.gui.ingredients;
 
-import javax.annotation.Nullable;
-import java.awt.Rectangle;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import mezz.jei.Internal;
 import mezz.jei.api.gui.IDrawable;
 import mezz.jei.api.gui.IGuiIngredientGroup;
@@ -23,6 +13,11 @@ import mezz.jei.ingredients.IngredientRegistry;
 import mezz.jei.util.ErrorUtil;
 import mezz.jei.util.Log;
 import net.minecraft.client.Minecraft;
+
+import javax.annotation.Nullable;
+import java.awt.*;
+import java.util.*;
+import java.util.List;
 
 public class GuiIngredientGroup<T> implements IGuiIngredientGroup<T> {
 	private final Map<Integer, GuiIngredient<T>> guiIngredients = new HashMap<Integer, GuiIngredient<T>>();
@@ -171,6 +166,16 @@ public class GuiIngredientGroup<T> implements IGuiIngredientGroup<T> {
 			}
 		}
 		return hovered;
+	}
+
+	@Nullable
+	public GuiIngredient<T> getHoveredIngredient(int xOffset, int yOffset, int mouseX, int mouseY) {
+		for (GuiIngredient<T> ingredient : guiIngredients.values()) {
+			if (ingredient.isMouseOver(xOffset, yOffset, mouseX, mouseY)) {
+				return ingredient;
+			}
+		}
+		return null;
 	}
 
 	@Override
